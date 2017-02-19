@@ -23,6 +23,16 @@ option.set keep-going : false ;
 4) Run b2 in that command prompt:
 
 
+```
+#!cmd
+
+b2  toolset=msvc-14.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
+
+b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
+
+```
+
+
 
 
 ## Links: 
