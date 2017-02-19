@@ -12,7 +12,7 @@ This is boost msvc build vs 2017
 #!python
 import option ; 
  
-using msvc : 14.0 : "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.24930/bin/HostX64/x64/cl.exe";
+using msvc : 15.0 : "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.24930/bin/HostX64/x64/cl.exe";
  
 option.set keep-going : false ; 
 ```
@@ -26,9 +26,9 @@ option.set keep-going : false ;
 ```
 #!cmd
 
-b2  toolset=msvc-14.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
+b2  toolset=msvc-15.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
 
-b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
+b2  toolset=msvc-15.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
 
 ```
 
@@ -36,9 +36,9 @@ b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-
 ```
 #!cmd
 
-b2  toolset=msvc-14.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
+b2  toolset=msvc-15.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
 
-b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
+b2  toolset=msvc-15.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
 
 ```
 
