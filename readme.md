@@ -32,6 +32,17 @@ b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-
 
 ```
 
+5) install 
+```
+#!cmd
+
+b2  toolset=msvc-14.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
+
+b2  toolset=msvc-14.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
+
+```
+
+
 
 
 
