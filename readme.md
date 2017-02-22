@@ -106,5 +106,7 @@ options  root=LABEL=p_arch rw resume=p_swap
  sudo systemctl start dhcpcd
 ```
 
+# Graka installieren
+
 # kde 
  https://www.techrapid.co.uk/linux/arch-linux/install-kde-plasma-on-arch-linux
