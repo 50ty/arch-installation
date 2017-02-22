@@ -1,4 +1,4 @@
-= Formatieren der Platte
+# Formatieren der Platte
 
 gdisk /dev/sda
  n
@@ -13,26 +13,26 @@ gdisk /dev/sda
  enter
  p
 
-= Efi Boot
+# Efi Boot
  mkfs.fat -F 32 -n EFIBOOT /dev/sdaX
 
-= root 
+# root 
  mkfs.ext4 -L p_arch /dev/sdaY
 
-= Partitionen einhängen
+# Partitionen einhängen
  mount -L /dev/sdaY /mnt
  mkdir /mnt/boot
  mount -L /dev/sdaX /mnt/boot
 
-= Pakete installieren
+# Pakete installieren
  pacstrap /mnt base base-devel wpa_supplicant
 
-= Fstab erzeugen 
+# Fstab erzeugen 
  genfstab -p /mnt > /mnt/etc/fstab
  # Kontrolle
  nano /mnt/etc/fstab
 
-= Starten & Konfig (> und >> beachten!)
+# Starten & Konfig (> und >> beachten!)
  arch-chroot /mnt
  echo myhost > /etc/hostname # Set Hostname
  echo KEYMAP=de-latin1 > /etc/vconsole.conf # Tastatur
@@ -48,38 +48,38 @@ gdisk /dev/sda
  passwd # passwort setzten
  pacman -S efibootmgr dosfstools gptfdisk # Pakete für uefi
 
-= Bootmanager
+# Bootmanager
  bootctl install 
 
-= nano /boot/loader/entries/arch-uefi.conf
+# nano /boot/loader/entries/arch-uefi.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
 options  root=LABEL=p_arch rw resume=p_swap
 
-= nano /boot/loader/entries/arch-uefi-fallback.conf
+# nano /boot/loader/entries/arch-uefi-fallback.conf
 title    Arch Linux Fallback
 linux    /vmlinuz-linux
 initrd   /initramfs-linux-fallback.img
 options  root=LABEL=p_arch rw resume=p_swap
 
-= reboot 
+# reboot 
  exit
  umount -R /mnt
  reboot
 
-= Nutzer anlegen
+# Nutzer anlegen
  useradd -m -G wheel -s /bin/bashs stefan
  passwd stefan
  nano /etc/sudoers
 
-= login to stefan
+# login to stefan
  logout
 
-= start dhcp???
+# start dhcp???
  sudo systemctl start dhcpcd
 
 
 
-= kde 
+# kde 
  https://www.techrapid.co.uk/linux/arch-linux/install-kde-plasma-on-arch-linux
