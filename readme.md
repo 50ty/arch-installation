@@ -1,52 +1,85 @@
-# Boost
+= Formatieren der Platte
 
-This is boost msvc build vs 2017
+gdisk /dev/sda
+ n
+ enter
+ enter
+ +512M
+ EF00
+ n
+ enter
+ enter
+ enter
+ enter
+ p
 
-## Steps
+= Efi Boot
+ mkfs.fat -F 32 -n EFIBOOT /dev/sdaX
 
-1) Run bootstrap.bat in boost directory
+= root 
+ mkfs.ext4 -L p_arch /dev/sdaY
 
-2) Update the project-config.jam: 
+= Partitionen einhängen
+ mount -L /dev/sdaY /mnt
+ mkdir /mnt/boot
+ mount -L /dev/sdaX /mnt/boot
 
-```
-#!python
-import option ; 
- 
-using msvc : 15.0 : "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.10.24930/bin/HostX64/x64/cl.exe";
- 
-option.set keep-going : false ; 
-```
+= Pakete installieren
+ pacstrap /mnt base base-devel wpa_supplicant
 
-3) Run "Developer Command Prompt for VS 2017 RC" from Windows Start Menu to boostrap from a shell configured using the x86 vcvars or x64 vcvars.
+= Fstab erzeugen 
+ genfstab -p /mnt > /mnt/etc/fstab
+ # Kontrolle
+ nano /mnt/etc/fstab
+
+= Starten & Konfig (> und >> beachten!)
+ arch-chroot /mnt
+ echo myhost > /etc/hostname # Set Hostname
+ echo KEYMAP=de-latin1 > /etc/vconsole.conf # Tastatur
+ echo FONT=lat9w-16 >> /etc/vconsole.conf # Font
+ ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime # Zeitzone
+ nano /etc/locale.gen
+	#uncomment:
+	#de_DE.UTF-8 UTF-8
+	#de_DE ISO-8859-1
+	#de_DE@euro ISO-8859-15
+ locale-gen
+ mkinitcpio -p linux # linuxkernel erzeugen
+ passwd # passwort setzten
+ pacman -S efibootmgr dosfstools gptfdisk # Pakete für uefi
+
+= Bootmanager
+ bootctl install 
+
+= nano /boot/loader/entries/arch-uefi.conf
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /initramfs-linux.img
+options  root=LABEL=p_arch rw resume=p_swap
+
+= nano /boot/loader/entries/arch-uefi-fallback.conf
+title    Arch Linux Fallback
+linux    /vmlinuz-linux
+initrd   /initramfs-linux-fallback.img
+options  root=LABEL=p_arch rw resume=p_swap
+
+= reboot 
+ exit
+ umount -R /mnt
+ reboot
+
+= Nutzer anlegen
+ useradd -m -G wheel -s /bin/bashs stefan
+ passwd stefan
+ nano /etc/sudoers
+
+= login to stefan
+ logout
+
+= start dhcp???
+ sudo systemctl start dhcpcd
 
 
-4) Run b2 in that command prompt:
 
-
-```
-#!cmd
-
-b2  toolset=msvc-15.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
-
-b2  toolset=msvc-15.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 
-
-```
-
-5) install 
-```
-#!cmd
-
-b2  toolset=msvc-15.0 address-model=64 link=static --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
-
-b2  toolset=msvc-15.0 address-model=64 link=shared --prefix=C:\dev\boost_1_63_0-build --build-type=minimal -j8 install
-
-```
-
-
-
-
-
-## Links: 
-
-* http://stackoverflow.com/questions/41464356/build-boost-with-msvc-14-1-vs2017-rc
-* https://studiofreya.com/2016/09/29/how-to-build-boost-1-62-with-visual-studio-2015/
+= kde 
+ https://www.techrapid.co.uk/linux/arch-linux/install-kde-plasma-on-arch-linux
