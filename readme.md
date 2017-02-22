@@ -1,6 +1,12 @@
 # Formatieren der Platte
 
+
+
+
+
 gdisk /dev/sda
+```
+#!bash
  n
  enter
  enter
@@ -12,6 +18,7 @@ gdisk /dev/sda
  enter
  enter
  p
+```
 
 # Efi Boot
  mkfs.fat -F 32 -n EFIBOOT /dev/sdaX
