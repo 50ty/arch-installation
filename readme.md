@@ -26,9 +26,9 @@ gdisk /dev/sda
 
 # Partitionen einhängen
 ```
- mount -L /dev/sdaY /mnt
+ mount /dev/sdaY /mnt
  mkdir /mnt/boot
- mount -L /dev/sdaX /mnt/boot
+ mount /dev/sdaX /mnt/boot
 ```
 
 # Pakete installieren
@@ -91,7 +91,7 @@ options  root=LABEL=p_arch rw resume=p_swap
 
 # Nutzer anlegen
 ```
- useradd -m -G wheel -s /bin/bashs stefan
+ useradd -m -G wheel -s /bin/bash stefan
  passwd stefan
  nano /etc/sudoers
 ```
