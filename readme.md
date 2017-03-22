@@ -71,7 +71,7 @@ gdisk /dev/sda
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options  root=LABEL=p_arch rw resume=p_swap
+options  root=LABEL=p_arch rw
 ```
 
 # nano /boot/loader/entries/arch-uefi-fallback.conf
@@ -79,7 +79,7 @@ options  root=LABEL=p_arch rw resume=p_swap
 title    Arch Linux Fallback
 linux    /vmlinuz-linux
 initrd   /initramfs-linux-fallback.img
-options  root=LABEL=p_arch rw resume=p_swap
+options  root=LABEL=p_arch rw
 ```
 
 # reboot 
