@@ -12,6 +12,8 @@ gdisk /dev/sda
  enter
  enter
  p
+ w
+ Y
 ```
 
 # Efi Boot
@@ -24,7 +26,7 @@ gdisk /dev/sda
  mkfs.ext4 -L p_arch /dev/sdaY
 ```
 
-# Partitionen einhÃ¤ngen
+# Partitionen einhängen
 ```
  mount /dev/sdaY /mnt
  mkdir /mnt/boot
@@ -58,7 +60,7 @@ gdisk /dev/sda
  locale-gen
  mkinitcpio -p linux # linuxkernel erzeugen
  passwd # passwort setzten
- pacman -S efibootmgr dosfstools gptfdisk # Pakete fÃ¼r uefi
+ pacman -S efibootmgr dosfstools gptfdisk # Pakete für uefi
 ```
 
 # Bootmanager
