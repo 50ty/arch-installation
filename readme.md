@@ -111,4 +111,4 @@ options  root=LABEL=p_arch rw
 # Graka installieren
 
 # kde 
- https://www.techrapid.co.uk/linux/arch-linux/install-kde-plasma-on-arch-linux
+ http://www.techrapid.co.uk/2017/04/install-kde-plasma-5-on-arch-linux.html
