@@ -1,3 +1,14 @@
+# Identifikation der Richtigen Platte 
+```
+lsblk 
+blkid
+```
+
+Ich installiere hier auf /dev/sda 
+Insgesamt werden zwei Partitionen angelegt, efi auf Partition 1 und arch auf Partition 2. 
+ACHTUNG: DIE GANZE PLATTE WIRD DABEI PLATT GEMACHT. 
+in der Anleitung muss dementsprechend X durch 1 und Y durch 2 ersetzt werden. 
+
 # Formatieren der Platte
 ```
 gdisk /dev/sda
