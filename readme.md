@@ -4,12 +4,13 @@ lsblk
 blkid
 ```
 
-Ich installiere hier auf /dev/sda 
-Insgesamt werden zwei Partitionen angelegt, efi auf Partition 1 und arch auf Partition 2. 
-ACHTUNG: DIE GANZE PLATTE WIRD DABEI PLATT GEMACHT. 
-in der Anleitung muss dementsprechend X durch 1 und Y durch 2 ersetzt werden. 
+Ich installiere hier auf /dev/sda und nehme an, dass nur zwei Partitionen (/dev/sda1 und /dev/sda2) vorhanden sind, wobei /dev/sda1 die boot Partition mit 512MB ist.
 
 # Formatieren der Platte
+```
+sgdisk -n 1:0:+512MB -n 2:0:0 -t 1:ef00 /dev/sda
+```
+Alternative:
 ```
 gdisk /dev/sda
  n
@@ -29,24 +30,24 @@ gdisk /dev/sda
 
 # Efi Boot
 ```
- mkfs.fat -F 32 -n EFIBOOT /dev/sdaX
+ mkfs.fat -F 32 -n EFIBOOT /dev/sda1
 ```
 
 # root 
 ```
- mkfs.ext4 -L p_arch /dev/sdaY
+ mkfs.ext4 -L p_arch /dev/sda2
 ```
 
 # Partitionen einhängen
 ```
- mount /dev/sdaY /mnt
+ mount /dev/sda2 /mnt
  mkdir /mnt/boot
- mount /dev/sdaX /mnt/boot
+ mount /dev/sda1 /mnt/boot
 ```
 
 # Pakete installieren
 ```
- pacstrap /mnt base base-devel wpa_supplicant
+ pacstrap /mnt base base-devel
 ```
 
 # Fstab erzeugen 
@@ -69,7 +70,6 @@ gdisk /dev/sda
 	#de_DE ISO-8859-1
 	#de_DE@euro ISO-8859-15
  locale-gen
- mkinitcpio -p linux # linuxkernel erzeugen
  passwd # passwort setzten
  pacman -S efibootmgr dosfstools gptfdisk # Pakete für uefi
 ```
@@ -104,8 +104,8 @@ options  root=LABEL=p_arch rw
 
 # Nutzer anlegen
 ```
- useradd -m -G wheel -s /bin/bash stefan
- passwd stefan
+ useradd -m -G wheel -s /bin/bash <desired username>
+ passwd <desired username>
  nano /etc/sudoers
 ```
 
